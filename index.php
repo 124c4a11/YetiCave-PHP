@@ -7,7 +7,7 @@ require_once('data.php');
 
 $page_content = include_template('templates/index.php', ['lots' => $lots]);
 $layout_content = include_template('templates/layout.php', [
-    'pagetitle' => 'Главная',
+    'pagetitle' => $config['sitename'] . ' - Главная',
     'content' => $page_content,
     'categories' => $categories
 ]);

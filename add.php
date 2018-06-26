@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $page_content = include_template('templates/lot.php', ['lot' => $lot]);
   }
 } else {
-  $page_content = include_template('templates/add-lot.php', []);
+  $page_content = include_template('templates/add-lot.php', ['categories' => $categories]);
 }
 
 

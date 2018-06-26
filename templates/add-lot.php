@@ -21,6 +21,7 @@
   </ul>
 </nav>
 
+
 <?php $class_name = isset($errors) ? 'form--invalid' : ''; ?>
 <form class="form form--add-lot container <?=$class_name; ?>" action="add.php" method="post" enctype="multipart/form-data">
   <h2>Добавление лота</h2>

@@ -1,5 +1,6 @@
 <?php
 
+
 require_once('config.php');
 require_once('functions.php');
 require_once('data.php');
@@ -8,27 +9,26 @@ require_once('data.php');
 $lot = null;
 
 
-if (isset($_GET['lot_id'])) {
-	$lot_id = $_GET['lot_id'];
+if (isset($_GET['id'])) {
+  $lot_id = $_GET['id'];
 
-	foreach ($lots as $lot_item) {
-		if ($lot_item['id'] == $lot_id) {
-			$lot = $lot_item;
-			break;
-		}
-	}
-}
-
-if (!$lot) {
-	http_response_code(404);
+  foreach ($lots as $item) {
+    if ($item['id'] == $lot_id) {
+      $lot = $item;
+      break;
+    }
+  }
 }
 
 
-$page_content = include_template('templates/lot.php', ['lot' => $lot]);
-$layout_content = include_template('templates/layout.php', [
-	'pagetitle' => $config['sitename'] . ' - ' . ($lot['title'] ?? 'Лот не сеществует!'),
-	'content' => $page_content,
-	'categories' => $categories
+if (!$lot) http_response_code(404);
+
+
+$page_content = include_template('./templates/lot.php', ['lot' => $lot]);
+$layout_content = include_template('./templates/layout.php', [
+  'pagetitle' => $config['sitename'] . ' - ' . ($lot['title'] ?? 'Лот не сеществует!'),
+  'content' => $page_content,
+  'categories' => $categories
 ]);
 
 

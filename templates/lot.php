@@ -1,5 +1,5 @@
 <nav class="nav">
-  <ul class="nav__list container">
+  <ul class="nav__list">
     <li class="nav__item">
       <a href="all-lots.html">Доски и лыжи</a>
     </li>
@@ -20,7 +20,7 @@
     </li>
   </ul>
 </nav>
-<section class="lot-item container">
+<section class="lot-item">
   <?php if (isset($lot)): ?>
     <h2><?=htmlspecialchars($lot['name']); ?></h2>
     <div class="lot-item__content">

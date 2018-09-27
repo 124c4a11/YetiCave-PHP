@@ -195,7 +195,6 @@ h2 {
   flex-wrap: wrap;
   width: 150px;
   margin: 0;
-  margin-top: 10px;
   padding: 0;
   list-style: none;
 }
@@ -219,10 +218,11 @@ h2 {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  align-items: center;
 }
 
 .user-menu__image {
-  width: 40px;
+  flex: 0 0 40px;
   height: 40px;
   margin-right: 10px;
   border-radius: 50%;
@@ -276,7 +276,8 @@ h2 {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  padding: 25px 0;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
 .main-footer__copyright {
@@ -360,13 +361,15 @@ h2 {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
   list-style: none;
 }
 
 .nav__item a {
   position: relative;
   display: block;
-  padding: 12px 10px;
+  padding: 12px 15px;
   font-weight: 700;
   color: #45abde;
 }
@@ -396,6 +399,10 @@ h2 {
 .nav__item--current a::before {
   display: block;
   background-color: #45abde;
+}
+
+.main-footer .nav__list {
+  margin: 0 -10px;
 }
 
 .main-footer .nav__item a {
@@ -983,7 +990,7 @@ input:invalid .form__error{
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
-  width: 80px;
+  width: 100px;
   margin-bottom: 19px;
   box-sizing: border-box;
 }
@@ -1097,6 +1104,14 @@ input:invalid .form__error{
 
 .history__name {
   font-weight: 700;
+}
+
+.history__price {
+  text-align: center;
+}
+
+.history__time {
+  text-align: right;
 }
 
 /* Мои ставки */

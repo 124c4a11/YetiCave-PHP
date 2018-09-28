@@ -96,14 +96,14 @@
   </div>
   <div class="form__container-three">
     <?php
-      $class_name = isset($errors['rate']) ? 'form__item--invalid' : '';
-      $value = isset($lot['rate']) ? $lot['rate'] : '';
+      $class_name = isset($errors['price']) ? 'form__item--invalid' : '';
+      $value = isset($lot['price']) ? $lot['price'] : '';
     ?>
     <div class="form__item form__item--small <?=$class_name ?>">
       <label for="lot-rate">Начальная цена</label>
-      <input id="lot-rate" type="number" name="rate" placeholder="0" value="<?=$value; ?>" required>
-      <?php if (isset($errors['rate'])): ?>
-        <span class="form__error"><?=$errors['rate']; ?></span>
+      <input id="lot-rate" type="number" name="price" placeholder="0" value="<?=$value; ?>" required>
+      <?php if (isset($errors['price'])): ?>
+        <span class="form__error"><?=$errors['price']; ?></span>
       <?php endif; ?>
     </div>
 

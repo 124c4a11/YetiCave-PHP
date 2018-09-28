@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors['image'] = 'Выберите изображение';
   }
 
-  if (!is_numeric($lot['rate']) || $lot['rate'] <= 0) {
-    $errors['rate'] = 'Число должно быть больше нуля';
+  if (!is_numeric($lot['price']) || $lot['price'] <= 0) {
+    $errors['price'] = 'Число должно быть больше нуля';
   }
 
   if (!is_numeric($lot['step']) || $lot['step'] <= 0) {

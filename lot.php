@@ -10,13 +10,30 @@ $lot = null;
 
 
 if (isset($_GET['id'])) {
-  $lot_id = $_GET['id'];
+  $id = $_GET['id'];
+  $popular_lots = [];
+  $expire = strtotime('+1 day');
 
   foreach ($lots as $item) {
-    if ($item['id'] == $lot_id) {
+    if ($item['id'] == $id) {
       $lot = $item;
       break;
     }
+  }
+
+  // cookie
+  if (isset($_COOKIE['popular_lots'])) {
+    $popular_lots = json_decode($_COOKIE['popular_lots'], true);
+
+    if (!in_array($id, $popular_lots)) {
+      $popular_lots[] = $id;
+      $popular_lots = json_encode($popular_lots);
+      setcookie('popular_lots', $popular_lots, $expire, '/');
+    }
+  } else {
+    $popular_lots[] = $id;
+    $popular_lots = json_encode($popular_lots);
+    setcookie('popular_lots', $popular_lots, $expire, '/');
   }
 }
 

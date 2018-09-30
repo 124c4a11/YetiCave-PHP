@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $file_type = finfo_file($finfo, $tmp_name);
 
     if ($file_type == 'image/jpeg' || $file_type == 'image/png') {
-      $lot['image'] = $image;
+      $lot['image'] = 'img/' . $image;
       move_uploaded_file($tmp_name, 'img/' . $image);
     } else {
       $errors['image'] = 'Загрузите изображение в формате JPG или PNG';

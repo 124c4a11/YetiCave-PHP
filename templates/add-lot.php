@@ -80,7 +80,7 @@
       <button class="preview__remove" type="button">x</button>
       <div class="preview__img">
         <?php if (isset($lot['image'])): ?>
-          <img src="img/<?=$lot['image']; ?>" width="113" height="113" alt="Изображение лота">
+          <img src="<?=$lot['image']; ?>" width="113" height="113" alt="Изображение лота">
         <? endif; ?>
       </div>
     </div>

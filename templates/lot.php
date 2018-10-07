@@ -32,28 +32,30 @@
         <p class="lot-item__description"><?=htmlspecialchars($lot['description']); ?></p>
       </div>
       <div class="lot-item__right">
-        <div class="lot-item__state">
-          <div class="lot-item__timer timer">
-            <!-- <?=get_remaining_time(); ?> -->
-            <?=date_format(date_create($lot['date']), 'd-m-Y'); ?>
-          </div>
-          <div class="lot-item__cost-state">
-            <div class="lot-item__rate">
-              <span class="lot-item__amount">Текущая цена</span>
-              <span class="lot-item__cost"><?=format_price($lot['price']); ?></span>
+        <?php if (isset($_SESSION['user'])): ?>
+          <div class="lot-item__state">
+            <div class="lot-item__timer timer">
+              <!-- <?=get_remaining_time(); ?> -->
+              <?=date_format(date_create($lot['date']), 'd-m-Y'); ?>
             </div>
-            <div class="lot-item__min-cost">
-              Мин. ставка <span><?=format_price($lot['step']); ?></span>
+            <div class="lot-item__cost-state">
+              <div class="lot-item__rate">
+                <span class="lot-item__amount">Текущая цена</span>
+                <span class="lot-item__cost"><?=format_price($lot['price']); ?></span>
+              </div>
+              <div class="lot-item__min-cost">
+                Мин. ставка <span><?=format_price($lot['step']); ?></span>
+              </div>
             </div>
+            <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
+              <p class="lot-item__form-item">
+                <label for="cost">Ваша ставка</label>
+                <input id="cost" type="number" name="cost" placeholder="12 000">
+              </p>
+              <button type="submit" class="button">Сделать ставку</button>
+            </form>
           </div>
-          <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
-            <p class="lot-item__form-item">
-              <label for="cost">Ваша ставка</label>
-              <input id="cost" type="number" name="cost" placeholder="12 000">
-            </p>
-            <button type="submit" class="button">Сделать ставку</button>
-          </form>
-        </div>
+        <?php endif; ?>
         <div class="history">
           <h3>История ставок (<span>10</span>)</h3>
           <table class="history__list">

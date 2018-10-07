@@ -27,3 +27,12 @@ function get_remaining_time() {
 
   return $hours . ':' . $minutes;
 }
+
+
+function get_user_by_email($email, $users) {
+  foreach ($users as $user) {
+    if ($user['email'] == $email) return $user;
+  }
+
+  return null;
+}

@@ -5,6 +5,9 @@ require_once('data.php');
 require_once('functions.php');
 
 
+session_start();
+
+
 $popular_lots_data = [];
 
 

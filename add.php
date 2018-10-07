@@ -5,6 +5,12 @@ require_once('data.php');
 require_once('functions.php');
 
 
+session_start();
+
+
+if (!isset($_SESSION['user'])) http_response_code('403');
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $lot = $_POST;
   $requireds = ['name', 'category', 'description', 'rate', 'step', 'date'];

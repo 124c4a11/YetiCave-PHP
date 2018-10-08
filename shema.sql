@@ -1,0 +1,66 @@
+CREATE DATABASE IF NOT EXISTS yeticave
+DEFAULT CHARACTER SET 'utf8'
+DEFAULT COLLATE 'utf8_general_ci';
+
+
+USE yeticave;
+
+
+CREATE TABLE IF NOT EXISTS categories (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(128) UNIQUE NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  reg_date TIMESTAMP DEFAULT NOW() NOT NULL,
+
+  name VARCHAR(80) NOT NULL,
+  email VARCHAR(80) UNIQUE NOT NULL,
+  password VARCHAR(120) NOT NULL,
+  avatar VARCHAR(255),
+  contacts VARCHAR(255)
+);
+
+
+CREATE TABLE IF NOT EXISTS lots (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  creation_date TIMESTAMP DEFAULT NOW() NOT NULL,
+  end_date TIMESTAMP NOT NULL,
+
+  name VARCHAR(128) NOT NULL,
+  image VARCHAR(255),
+  `description` TEXT,
+  start_price INT UNSIGNED NOT NULL,
+  step INT UNSIGNED DEFAULT 1000 NOT NULL,
+
+  favorites_counter INT UNSIGNED DEFAULT 0 NOT NULL,
+
+  author_id INT UNSIGNED NOT NULL,
+  winner_id INT UNSIGNED NOT NULL,
+  category_id INT UNSIGNED NOT NULL,
+
+  FOREIGN KEY (author_id) REFERENCES users(id),
+  FOREIGN KEY (winner_id) REFERENCES users(id),
+  FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS bids (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+  creation_date TIMESTAMP DEFAULT NOW() NOT NULL,
+  price INT UNSIGNED NOT NULL,
+
+  user_id INT UNSIGNED NOT NULL,
+  lot_id INT UNSIGNED NOT NULL,
+
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (lot_id) REFERENCES lots(id)
+);
+
+
+CREATE INDEX category_name ON categories(name);
+CREATE INDEX lot_name ON lots(name);
+CREATE INDEX user_email ON users(email);

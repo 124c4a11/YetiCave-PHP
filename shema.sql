@@ -31,14 +31,14 @@ CREATE TABLE IF NOT EXISTS lots (
 
   name VARCHAR(128) NOT NULL,
   image VARCHAR(255),
-  `description` TEXT,
+  description TEXT,
   start_price INT UNSIGNED NOT NULL,
   step INT UNSIGNED DEFAULT 1000 NOT NULL,
 
   favorites_counter INT UNSIGNED DEFAULT 0 NOT NULL,
 
   author_id INT UNSIGNED NOT NULL,
-  winner_id INT UNSIGNED NOT NULL,
+  winner_id INT UNSIGNED,
   category_id INT UNSIGNED NOT NULL,
 
   FOREIGN KEY (author_id) REFERENCES users(id),

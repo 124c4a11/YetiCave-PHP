@@ -761,6 +761,8 @@ h2 {
   box-sizing: border-box;
 }
 
+.form__item input[type="file"] { width: auto; }
+
 .form__item textarea {
   min-height: 184px;
   resize: none;

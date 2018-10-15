@@ -1,16 +1,18 @@
 <?php
 
 
-require_once('data.php');
-require_once('functions.php');
+require_once 'init.php';
+require_once 'data.php';
+require_once 'functions.php';
+require_once 'mysql_helper.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $user = $_POST;
+  $form = $_POST;
   $requireds = ['email', 'password', 'name', 'contacts'];
   $errors = [];
 
-  foreach($user as $key => $val) {
+  foreach($form as $key => $val) {
     if (in_array($key, $requireds) && !$val) {
       if ($key == 'email') $errors[$key] = 'Введите e-mail';
       if ($key == 'password') $errors[$key] = 'Введите пароль';
@@ -19,8 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
   }
 
-  if ($user['email'] != '' && !filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
+  if ($form['email'] && !filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
     $errors['email'] = 'Введите корректный e-mail';
+  }
+
+  if ($connect && !isset($errors['email'])) {
+    $user = get_user_by_email($connect, $form['email']);
+    if ($user && count($user)) $errors['email'] = 'Этот e-mail занят';
   }
 
   if (isset($_FILES['avatar']['tmp_name']) && $_FILES['avatar']['tmp_name'] != '') {
@@ -30,16 +37,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($file_type == 'image/jpeg' || $file_type == 'image/png') {
       move_uploaded_file($tmp_name, 'uploads/' . $image_name);
-      $user['avatar'] = 'uploads/' . $image_name;
+      $form['avatar'] = 'uploads/' . $image_name;
     } else {
       $errors['avatar'] = 'Загружаемый файл должен быть в одном из форматов: jpeg, jpg, png';
     } 
   }
 
   if (count($errors)) {
-    $page_content = include_template('templates/sign-up.php', ['user' => $user, 'errors' => $errors]);
+    $page_content = include_template('templates/sign-up.php', ['user' => $form, 'errors' => $errors]);
   } else {
-    $page_content = include_template('templates/sign-up.php', ['user' => $user]);
+    $page_content = include_template('templates/sign-up.php', ['user' => $form]);
   }
 } else {
   $page_content = include_template('templates/sign-up.php', []);

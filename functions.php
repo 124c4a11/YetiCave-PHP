@@ -29,10 +29,13 @@ function get_remaining_time() {
 }
 
 
-function get_user_by_email($email, $users) {
-  foreach ($users as $user) {
-    if ($user['email'] == $email) return $user;
-  }
+function get_user_by_email($connect, $email) {
+  $sql = 'SELECT name, email, password, avatar FROM users WHERE email = ?';
+  $stmt = db_get_prepare_stmt($connect, $sql, [$email]);
 
-  return null;
+  mysqli_stmt_execute($stmt);
+
+  $res = mysqli_stmt_get_result($stmt);
+
+  return mysqli_fetch_assoc($res);
 }

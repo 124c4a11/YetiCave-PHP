@@ -46,6 +46,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (count($errors)) {
     $page_content = include_template('templates/sign-up.php', ['user' => $form, 'errors' => $errors]);
   } else {
+    if ($connect) {
+      $pas = password_hash($form['password'], PASSWORD_DEFAULT);
+      $avatar = $form['avatar'] ?? '';
+      $sql = "INSERT INTO users (name, email, password, contacts, avatar) VALUES (?, ?, ?, ?, ?)";
+      $stmt = db_get_prepare_stmt($connect, $sql, [$form['name'], $form['email'], $pas, $form['contacts'], $avatar]);
+      mysqli_stmt_execute($stmt);
+
+      header('Location: login.php');
+      exit();
+    }
+
     $page_content = include_template('templates/sign-up.php', ['user' => $form]);
   }
 } else {

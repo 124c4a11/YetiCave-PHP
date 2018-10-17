@@ -1,6 +1,9 @@
 <?php
 
 
+require_once 'mysql_helper.php';
+
+
 function format_price($price) {
   $price = number_format($price, 0, '', ' ');
   return $price . ' <b class="rub">р</b>';

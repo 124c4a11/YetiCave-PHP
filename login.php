@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
   }
 } else {
-  if (count($_SESSION['new_user'])) {
+  if (array_key_exists('new_user', $_SESSION)) {
     $page_content = include_template('./templates/login.php', ['user' => $_SESSION['new_user']]);
   } else {
     $page_content = include_template('./templates/login.php', []);

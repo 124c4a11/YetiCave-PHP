@@ -7,6 +7,9 @@ require_once 'functions.php';
 require_once 'mysql_helper.php';
 
 
+session_start();
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $form = $_POST;
   $requireds = ['email', 'password', 'name', 'contacts'];
@@ -51,10 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $avatar = $form['avatar'] ?? '';
       $sql = "INSERT INTO users (name, email, password, contacts, avatar) VALUES (?, ?, ?, ?, ?)";
       $stmt = db_get_prepare_stmt($connect, $sql, [$form['name'], $form['email'], $pas, $form['contacts'], $avatar]);
-      mysqli_stmt_execute($stmt);
+      $res = mysqli_stmt_execute($stmt);
 
-      header('Location: login.php');
-      exit();
+      if ($res) {
+        $_SESSION['new_user']['email'] = $form['email'];
+        $_SESSION['new_user']['password'] = $form['password'];
+
+        header('Location: login.php');
+        exit();
+      }
     }
 
     $page_content = include_template('templates/sign-up.php', ['user' => $form]);

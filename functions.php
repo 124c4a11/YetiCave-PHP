@@ -21,12 +21,12 @@ function include_template($path, $data) {
 }
 
 
-function get_remaining_time() {
+function get_remaining_time($end_date) {
   $now = time();
-  $tomorrow = strtotime('tomorrow');
-  $sec_to_midnight = $tomorrow - $now;
-  $hours = floor($sec_to_midnight / 3600);
-  $minutes = floor(($sec_to_midnight % 3600) / 60);
+  $end_date = strtotime($end_date);
+  $sec_to_end = $end_date - $now;
+  $hours = floor($sec_to_end / 3600);
+  $minutes = floor(($sec_to_end % 3600) / 60);
 
   return $hours . ':' . $minutes;
 }

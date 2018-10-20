@@ -1,8 +1,10 @@
 <?php
 
-require_once('config.php');
-require_once('data.php');
-require_once('functions.php');
+
+require_once 'init.php';
+require_once 'config.php';
+require_once 'data.php';
+require_once 'functions.php';
 
 
 session_start();
@@ -55,7 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (count($errors)) {
     $page_content = include_template('./templates/add-lot.php', ['lot'=> $lot, 'errors' => $errors, 'categories' => $categories]);
   } else {
-    $page_content = include_template('./templates/lot.php', ['lot' => $lot]);
+    $author_id = $_SESSION['user']['id'];
+    $category_id = get_category_id_by_name($connect, $lot['category']);
+    $sql = 'INSERT INTO lots (name, image, description, start_price, step, end_date, author_id, category_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    $stmt = db_get_prepare_stmt($connect, $sql, [$lot['name'], $lot['image'], $lot['description'], $lot['price'], $lot['step'], $lot['date'], $author_id, $category_id]);
+    mysqli_stmt_execute($stmt);
+
+    // $page_content = include_template('./templates/lot.php', ['lot' => $lot]);
   }
 } else {
   $page_content = include_template('./templates/add-lot.php', ['categories' => $categories]);

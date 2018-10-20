@@ -33,7 +33,7 @@ function get_remaining_time($end_date) {
 
 
 function get_user_by_email($connect, $email) {
-  $sql = 'SELECT name, email, password, avatar FROM users WHERE email = ?';
+  $sql = 'SELECT id, name, email, password, avatar FROM users WHERE email = ?';
   $stmt = db_get_prepare_stmt($connect, $sql, [$email]);
 
   mysqli_stmt_execute($stmt);
@@ -41,4 +41,16 @@ function get_user_by_email($connect, $email) {
   $res = mysqli_stmt_get_result($stmt);
 
   return mysqli_fetch_assoc($res);
+}
+
+
+function get_category_id_by_name($connect, $name) {
+  $sql = 'SELECT id FROM categories WHERE name = ?';
+  $stmt = db_get_prepare_stmt($connect, $sql, [$name]);
+
+  mysqli_stmt_execute($stmt);
+
+  $res = mysqli_stmt_get_result($stmt);
+
+  return mysqli_fetch_row($res)[0];
 }

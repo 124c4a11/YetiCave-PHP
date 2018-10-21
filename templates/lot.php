@@ -32,21 +32,20 @@
         <p class="lot-item__description"><?=htmlspecialchars($lot['description']); ?></p>
       </div>
       <div class="lot-item__right">
-        <?php if (isset($_SESSION['user'])): ?>
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
-              <!-- <?=get_remaining_time(); ?> -->
-              <?=date_format(date_create($lot['date']), 'd-m-Y'); ?>
+              <?=date_format(date_create($lot['end_date']), 'd-m-Y'); ?>
             </div>
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                <span class="lot-item__cost"><?=format_price($lot['price']); ?></span>
+                <span class="lot-item__cost"><?= format_price($lot['start_price']); ?></span>
               </div>
               <div class="lot-item__min-cost">
-                Мин. ставка <span><?=format_price($lot['step']); ?></span>
+                Мин. ставка <span><?= format_price($lot['start_price'] + $lot['step']); ?></span>
               </div>
             </div>
+            <?php if (isset($_SESSION['user'])): ?>
             <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
               <p class="lot-item__form-item">
                 <label for="cost">Ваша ставка</label>
@@ -54,8 +53,8 @@
               </p>
               <button type="submit" class="button">Сделать ставку</button>
             </form>
+            <?php endif; ?>
           </div>
-        <?php endif; ?>
         <div class="history">
           <h3>История ставок (<span>10</span>)</h3>
           <table class="history__list">

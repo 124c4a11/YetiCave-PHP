@@ -1,9 +1,10 @@
 <?php
 
 
-require_once('config.php');
-require_once('functions.php');
-require_once('data.php');
+require_once 'init.php';
+require_once 'config.php';
+require_once 'functions.php';
+require_once 'data.php';
 
 
 session_start();
@@ -17,12 +18,7 @@ if (isset($_GET['id'])) {
   $popular_lots = [];
   $expire = strtotime('+1 day');
 
-  foreach ($lots as $item) {
-    if ($item['id'] == $id) {
-      $lot = $item;
-      break;
-    }
-  }
+  $lot = get_lot_by_id($connect, $id);
 
   // cookie
   if (isset($_COOKIE['popular_lots'])) {
@@ -46,7 +42,7 @@ if (!$lot) http_response_code(404);
 
 $page_content = include_template('./templates/lot.php', ['lot' => $lot]);
 $layout_content = include_template('./templates/layout.php', [
-  'pagetitle' => $config['sitename'] . ' - ' . ($lot['title'] ?? 'Лот не сеществует!'),
+  'pagetitle' => $config['sitename'] . ' - ' . ($lot['name'] ?? 'Лот не сеществует!'),
   'content' => $page_content,
   'categories' => $categories
 ]);

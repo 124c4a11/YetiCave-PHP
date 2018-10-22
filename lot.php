@@ -19,6 +19,7 @@ if (isset($_GET['id'])) {
   $expire = strtotime('+1 day');
 
   $lot = get_lot_by_id($connect, $id);
+  $last_bets = get_last_bets_for_lot($connect, $id);
 
   // cookie
   if (isset($_COOKIE['popular_lots'])) {
@@ -40,7 +41,7 @@ if (isset($_GET['id'])) {
 if (!$lot) http_response_code(404);
 
 
-$page_content = include_template('./templates/lot.php', ['lot' => $lot]);
+$page_content = include_template('./templates/lot.php', ['lot' => $lot, 'last_bets' => $last_bets]);
 $layout_content = include_template('./templates/layout.php', [
   'pagetitle' => $config['sitename'] . ' - ' . ($lot['name'] ?? 'Лот не сеществует!'),
   'content' => $page_content,

@@ -69,3 +69,19 @@ function get_lot_by_id($connect, $id) {
 
   return mysqli_fetch_assoc($res);
 }
+
+
+function get_last_bets_for_lot($connect, $lot_id) {
+  $sql = 'SELECT DATE_FORMAT(b.creation_date, "%d-%m-%Y %H:%i:%s") creation_date, b.price, b.user_id, u.name user_name FROM bids b
+          LEFT JOIN users u ON u.id = b.user_id
+          WHERE b.lot_id = ?
+          ORDER BY creation_date DESC
+          LIMIT 9';
+  $stmt = db_get_prepare_stmt($connect, $sql, [$lot_id]);
+
+  mysqli_stmt_execute($stmt);
+
+  $res = mysqli_stmt_get_result($stmt);
+
+  return mysqli_fetch_all($res, MYSQLI_ASSOC);
+}

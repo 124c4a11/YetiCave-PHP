@@ -39,10 +39,10 @@
           <div class="lot-item__cost-state">
             <div class="lot-item__rate">
               <span class="lot-item__amount">Текущая цена</span>
-              <span class="lot-item__cost"><?= format_price($lot['start_price']); ?></span>
+              <span class="lot-item__cost"><?= format_price($lot['current_price']); ?></span>
             </div>
             <div class="lot-item__min-cost">
-              Мин. ставка <span><?= format_price($lot['start_price'] + $lot['step']); ?></span>
+              Мин. ставка <span><?= format_price($lot['min_cost']); ?></span>
             </div>
           </div>
           <?php if (isset($_SESSION['user'])): ?>

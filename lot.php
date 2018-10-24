@@ -20,8 +20,21 @@ if (isset($_GET['id'])) {
 
   $lot = get_lot_by_id($connect, $id);
   $last_bets = get_last_bets_for_lot($connect, $id);
+  $max_bet = $last_bets[0]['price'];
+  $step = $lot['step'];
 
-  // cookie
+  // get current price
+  // and
+  // get min cost
+  if (isset($max_bet)) {
+    $lot['current_price'] = $max_bet;
+    $lot['min_cost'] = $max_bet + $step;
+  } else {
+    $lot['current_price'] = $lot['start_price'];
+    $lot['min_cost'] = $lot['start_price'] + $step;
+  }
+
+  // cookie: popular_lots
   if (isset($_COOKIE['popular_lots'])) {
     $popular_lots = json_decode($_COOKIE['popular_lots'], true);
 

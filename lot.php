@@ -10,6 +10,7 @@ require_once 'data.php';
 session_start();
 
 
+$nav_list = include_template('templates/blocks/nav-list.php', ['categories' => $categories]);
 $lot = null;
 
 
@@ -54,11 +55,11 @@ if (isset($_GET['id'])) {
 if (!$lot) http_response_code(404);
 
 
-$page_content = include_template('./templates/lot.php', ['lot' => $lot, 'last_bets' => $last_bets]);
+$page_content = include_template('./templates/lot.php', ['lot' => $lot, 'last_bets' => $last_bets, 'nav_list' => $nav_list]);
 $layout_content = include_template('./templates/layout.php', [
   'pagetitle' => $config['sitename'] . ' - ' . ($lot['name'] ?? 'Лот не сеществует!'),
   'content' => $page_content,
-  'categories' => $categories
+  'nav_list' => $nav_list
 ]);
 
 

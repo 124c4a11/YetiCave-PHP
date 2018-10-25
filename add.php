@@ -10,6 +10,9 @@ require_once 'functions.php';
 session_start();
 
 
+$nav_list = include_template('templates/blocks/nav-list.php', ['categories' => $categories]);
+
+
 if (!isset($_SESSION['user'])) http_response_code('403');
 
 
@@ -55,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
   if (count($errors)) {
-    $page_content = include_template('./templates/add-lot.php', ['lot'=> $lot, 'errors' => $errors, 'categories' => $categories]);
+    $page_content = include_template('./templates/add-lot.php', ['lot'=> $lot, 'errors' => $errors, 'nav_list' => $nav_list]);
   } else {
     if ($connect) {
       $author_id = $_SESSION['user']['id'];
@@ -71,18 +74,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
       }  
     } else {
-      $page_content = include_template('./templates/add-lot.php', ['categories' => $categories]);
+      $page_content = include_template('./templates/add-lot.php', ['nav_list' => $nav_list]);
     }
   }
 } else {
-  $page_content = include_template('./templates/add-lot.php', ['categories' => $categories]);
+  $page_content = include_template('./templates/add-lot.php', ['nav_list' => $nav_list]);
 }
 
 
 $layout_content = include_template('templates/layout.php', [
   'pagetitle' => $config['sitename'] . ' - ' . 'Добавить лот',
-  'categories' => $categories,
-  'content' => $page_content
+  'content' => $page_content,
+  'nav_list' => $nav_list
 ]);
 
 

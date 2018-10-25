@@ -40,18 +40,12 @@
   </div>
 </header>
 
-<main class="container"><?=$content; ?></main>
+<main class="container"><?= $content; ?></main>
 
 <footer class="main-footer">
   <nav class="nav">
     <div class="container">
-      <ul class="nav__list">
-        <?php for ($i = 0; $i < count($categories); $i++): ?>
-          <li class="nav__item">
-            <a href="all-lots.html"><?=$categories[$i]; ?></a>
-          </li>
-        <?php endfor; ?>
-      </ul>
+      <?= $nav_list; ?> 
     </div>
   </nav>
   <div class="main-footer__bottom container">

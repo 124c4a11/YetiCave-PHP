@@ -10,6 +10,9 @@ require_once 'functions.php';
 session_start();
 
 
+$nav_list = include_template('templates/blocks/nav-list.php', ['categories' => $categories]);
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $form = $_POST;
   $errors = [];
@@ -37,24 +40,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
   if (count($errors)) {
-    $page_content = include_template('./templates/login.php', ['user' => $form, 'errors' => $errors]);
+    $page_content = include_template('./templates/login.php', ['user' => $form, 'errors' => $errors, 'nav_list' => $nav_list]);
   } else {
     header('Location: /');
     exit();
   }
 } else {
   if (array_key_exists('new_user', $_SESSION)) {
-    $page_content = include_template('./templates/login.php', ['user' => $_SESSION['new_user']]);
+    $page_content = include_template('./templates/login.php', ['user' => $_SESSION['new_user'], 'nav_list' => $nav_list]);
   } else {
-    $page_content = include_template('./templates/login.php', []);
+    $page_content = include_template('./templates/login.php', ['nav_list' => $nav_list]);
   }
 }
 
 
 $layout_content = include_template('./templates/layout.php', [
   'pagetitle' => 'Вход',
-  'categories' => $categories,
-  'content' => $page_content
+  'content' => $page_content,
+  'nav_list' => $nav_list
 ]);
 
 

@@ -1,13 +1,14 @@
 <?php
 
 
-require_once('data.php');
-require_once('functions.php');
+require_once 'data.php';
+require_once 'functions.php';
 
 
 session_start();
 
 
+$nav_list = include_template('templates/blocks/nav-list.php', ['categories' => $categories]);
 $popular_lots_data = [];
 
 
@@ -22,9 +23,10 @@ if ($_COOKIE['popular_lots']) {
 }
 
 
-$page_content = include_template('./templates/history.php', ['lots' => $popular_lots_data]);
+$page_content = include_template('./templates/history.php', ['lots' => $popular_lots_data, 'nav_list' => $nav_list]);
 $layout_content = include_template('./templates/layout.php', [
   'pagetitle' => 'История просмотров',
+  'nav_list' => $nav_list,
   'content' => $page_content
 ]);
 

@@ -56,6 +56,14 @@ function get_category_id_by_name($connect, $name) {
 }
 
 
+function get_categories($connect) {
+  $sql = 'SELECT * FROM categories ORDER BY id';
+  $res = mysqli_query($connect, $sql);
+
+  return mysqli_fetch_all($res, MYSQLI_ASSOC);
+}
+
+
 function get_lot_by_id($connect, $id) {
   $sql = 'SELECT l.*, u.name author, c.name category FROM lots l
           LEFT JOIN categories c ON c.id = l.category_id

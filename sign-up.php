@@ -10,6 +10,9 @@ require_once 'mysql_helper.php';
 session_start();
 
 
+$nav_list = include_template('templates/blocks/nav-list.php', ['categories' => $categories]);
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $form = $_POST;
   $requireds = ['email', 'password', 'name', 'contacts'];
@@ -65,16 +68,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       }
     }
 
-    $page_content = include_template('templates/sign-up.php', ['user' => $form]);
+    $page_content = include_template('templates/sign-up.php', ['user' => $form, 'nav_list' => $nav_list]);
   }
 } else {
-  $page_content = include_template('templates/sign-up.php', []);
+  $page_content = include_template('templates/sign-up.php', ['nav_list' => $nav_list]);
 }
 
 
 $layout_content = include_template('templates/layout.php', [
   'pagetitle' => 'Регистрация аккаунта',
-  'categories' => $categories,
+  'nav_list' => $nav_list,
   'content' => $page_content
 ]);
 

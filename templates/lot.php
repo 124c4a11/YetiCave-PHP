@@ -28,13 +28,21 @@
             </div>
           </div>
           <?php if (isset($_SESSION['user'])): ?>
-          <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
-            <p class="lot-item__form-item">
-              <label for="cost">Ваша ставка</label>
-              <input id="cost" type="number" name="cost" placeholder="12 000">
-            </p>
-            <button type="submit" class="button">Сделать ставку</button>
-          </form>
+            <?php $class_name = isset($errors) ? 'form--invalid' : ''; ?>
+            <form class="lot-item__form <?= $class_name; ?>" action="lot.php?id=<?= $lot['id']; ?>" method="post">
+              <?php
+                $class_name = isset($errors['bet']) ? 'form__item--invalid' : '';
+                $value = isset($lot['bet']) ? $lot['bet'] : ''; 
+              ?>
+              <p class="lot-item__form-item <?= $class_name; ?>">
+                <label for="cost">Ваша ставка</label>
+                <input id="cost" type="number" name="cost" placeholder="<?= $lot['min_cost']; ?>" value="<?= $value; ?>">
+                <?php if (isset($errors['bet'])): ?>
+                  <span class="form__error"><?= $errors['bet']; ?></span>
+                <?php endif; ?>
+              </p>
+              <button type="submit" class="button">Сделать ставку</button>
+            </form>
           <?php endif; ?>
         </div>
         <?php if (count($last_bets)): ?>

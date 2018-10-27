@@ -23,7 +23,10 @@ if ($connect) {
 
   if ($res) {
     $lots = mysqli_fetch_all($res, MYSQLI_ASSOC);
-    $page_content = include_template('./templates/index.php', ['lots' => $lots, 'promo_list' => $promo_list]);
+    
+    $lots_list = include_template('./templates/blocks/lots-list.php', ['lots' => $lots]);
+
+    $page_content = include_template('./templates/index.php', ['lots_list' => $lots_list, 'promo_list' => $promo_list]);
   }
 } else {
   $page_content = include_template('./templates/index.php', ['promo_list' => $promo_list]);

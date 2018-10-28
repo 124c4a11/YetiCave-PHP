@@ -15,18 +15,37 @@ $nav_list = include_template('templates/blocks/nav-list.php', ['categories' => $
 
 
 if ($connect) {
-  $sql = 'SELECT l.id, l.name, end_date, image, start_price, c.name category FROM lots l
-          JOIN categories c ON c.id = l.category_id
-          WHERE end_date >= CURDATE()
-          ORDER BY end_date DESC';
-  $res = mysqli_query($connect, $sql);
+  // pagination data
+  $cur_page = $_GET['page'] ?? 1;
+  $href = '/?page=';
+  $limit = 6;
+  $offset = ($cur_page - 1) * $limit;
 
-  if ($res) {
-    $lots = mysqli_fetch_all($res, MYSQLI_ASSOC);
-    
+  $sql = 'SELECT COUNT(*) AS cnt FROM lots WHERE end_date >= CURDATE()';
+  $res = mysqli_query($connect, $sql);
+  $items_count = mysqli_fetch_assoc($res)['cnt'];
+  $pages_count = ceil($items_count / $limit);
+  $pages = range(1, $pages_count);
+  
+  $lots = get_last_lots($connect, $limit, $offset);
+
+  if ($lots && count($lots)) {
     $lots_list = include_template('./templates/blocks/lots-list.php', ['lots' => $lots]);
 
-    $page_content = include_template('./templates/index.php', ['lots_list' => $lots_list, 'promo_list' => $promo_list]);
+    $pagination = include_template('./templates/blocks/pagination.php', [
+      'href' => $href,
+      'cur_page' => $cur_page,
+      'pages_count' => $pages_count,
+      'pages' => $pages
+    ]);
+
+    $page_content = include_template('./templates/index.php', [
+      'promo_list' => $promo_list,
+      'lots_list' => $lots_list,
+      'pagination' => $pagination
+    ]);
+  } else {
+    $page_content = include_template('./templates/index.php', ['promo_list' => $promo_list]);
   }
 } else {
   $page_content = include_template('./templates/index.php', ['promo_list' => $promo_list]);

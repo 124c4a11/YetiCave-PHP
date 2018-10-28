@@ -9,4 +9,6 @@
   </div>
 
   <?= $lots_list; ?> 
+
+  <?= $pagination; ?>
 </section>

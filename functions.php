@@ -91,6 +91,18 @@ function get_last_lots($connect, $limit, $offset) {
 }
 
 
+function get_lots_by_ids_str($connect, $lots_ids_str, $limit, $offset) {
+  $sql = 'SELECT l.*, u.name author, c.name category FROM lots l
+          LEFT JOIN categories c ON c.id = l.category_id
+          LEFT JOIN users u ON u.id = l.author_id
+          WHERE l.id IN (' . $lots_ids_str . ')
+          LIMIT ' . $limit . ' OFFSET ' . $offset;
+  $res = mysqli_query($connect, $sql);
+
+  return mysqli_fetch_all($res, MYSQLI_ASSOC);
+}
+
+
 function get_last_bets_for_lot($connect, $lot_id) {
   $sql = 'SELECT DATE_FORMAT(b.creation_date, "%d-%m-%Y %H:%i:%s") creation_date, b.price, b.user_id, u.name user_name FROM bids b
           LEFT JOIN users u ON u.id = b.user_id

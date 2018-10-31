@@ -29,8 +29,8 @@
           <option>Выберите категорию</option>
 
           <?php foreach ($categories as $category): ?>
-            <?php $selected = ($category == $lot['category']) ? 'selected' : '' ?>
-            <option <?=$selected; ?> ><?=$category ?></option>
+            <?php $selected = ($category['name'] == $lot['category']) ? 'selected' : '' ?>
+            <option <?=$selected; ?> ><?= $category['name']; ?></option>
           <?php endforeach; ?>
         </select>
         <?php if (isset($errors['category'])): ?>

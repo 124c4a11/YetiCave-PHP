@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
   if (count($errors)) {
-    $page_content = include_template('./templates/add-lot.php', ['lot'=> $lot, 'errors' => $errors, 'nav_list' => $nav_list]);
+    $page_content = include_template('./templates/add-lot.php', ['lot'=> $lot, 'errors' => $errors, 'categories' => $categories, 'nav_list' => $nav_list]);
   } else {
     if ($connect) {
       $author_id = $_SESSION['user']['id'];
@@ -74,11 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
       }  
     } else {
-      $page_content = include_template('./templates/add-lot.php', ['nav_list' => $nav_list]);
+      $page_content = include_template('./templates/add-lot.php', ['categories' => $categories, 'nav_list' => $nav_list]);
     }
   }
 } else {
-  $page_content = include_template('./templates/add-lot.php', ['nav_list' => $nav_list]);
+  $page_content = include_template('./templates/add-lot.php', ['categories' => $categories, 'nav_list' => $nav_list]);
 }
 
 

@@ -64,6 +64,18 @@ function get_categories($connect) {
 }
 
 
+function get_category_by_id($connect, $id) {
+  $sql = 'SELECT * FROM categories WHERE id = ?';
+  $stmt = db_get_prepare_stmt($connect, $sql, [$id]);
+
+  mysqli_stmt_execute($stmt);
+
+  $res = mysqli_stmt_get_result($stmt);
+
+  return mysqli_fetch_assoc($res);
+}
+
+
 function get_lot_by_id($connect, $id) {
   $sql = 'SELECT l.*, u.name author, c.name category FROM lots l
           LEFT JOIN categories c ON c.id = l.category_id
@@ -98,6 +110,20 @@ function get_lots_by_ids_str($connect, $lots_ids_str, $limit, $offset) {
           WHERE l.id IN (' . $lots_ids_str . ')
           LIMIT ' . $limit . ' OFFSET ' . $offset;
   $res = mysqli_query($connect, $sql);
+
+  return mysqli_fetch_all($res, MYSQLI_ASSOC);
+}
+
+
+function get_lots_by_category_id($connect, $category_id, $limit, $offset) {
+  $sql = 'SELECT * FROM lots
+          WHERE category_id = ?' .
+          ' LIMIT ' . $limit . ' OFFSET ' . $offset;
+  $stmt = db_get_prepare_stmt($connect, $sql, [$category_id]);
+
+  mysqli_stmt_execute($stmt);
+
+  $res = mysqli_stmt_get_result($stmt);
 
   return mysqli_fetch_all($res, MYSQLI_ASSOC);
 }

@@ -94,7 +94,7 @@ function get_lot_by_id($connect, $id) {
 function get_last_lots($connect, $limit, $offset) {
   $sql = 'SELECT l.id, l.name, end_date, image, start_price, c.name category FROM lots l
           JOIN categories c ON c.id = l.category_id
-          WHERE end_date >= CURDATE()
+          WHERE end_date > CURDATE()
           ORDER BY end_date DESC
           LIMIT ' . $limit . ' OFFSET ' . $offset;
   $res = mysqli_query($connect, $sql);
@@ -157,4 +157,24 @@ function get_last_bets_for_lot($connect, $lot_id) {
   $res = mysqli_stmt_get_result($stmt);
 
   return mysqli_fetch_all($res, MYSQLI_ASSOC);
+}
+
+
+function set_winners_for_expired_lots($connect) {
+  // get expired lots
+  $sql = 'SELECT l.id id, b.user_id winner_id FROM lots l
+          JOIN bids b ON b.lot_id = l.id
+          JOIN (SELECT b.lot_id lot_id, MAX(b.price) max_price FROM bids b GROUP BY b.lot_id) AS tmp
+          ON b.lot_id = tmp.lot_id AND b.price = tmp.max_price
+          WHERE l.end_date <= curdate() AND l.winner_id IS NULL';
+  $expired_lots_res = mysqli_query($connect, $sql);
+  $expired_lots = mysqli_fetch_all($expired_lots_res, MYSQLI_ASSOC);
+
+  // set winner_id for lots
+  if ($expired_lots) {
+    foreach ($expired_lots as $lot) {
+      $sql = 'UPDATE lots SET winner_id = ' . $lot['winner_id'] . ' WHERE id = ' . $lot['id'];
+      mysqli_query($connect, $sql);
+    }
+  }
 }

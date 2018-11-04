@@ -10,6 +10,9 @@ require_once 'data.php';
 session_start();
 
 
+set_winners_for_expired_lots($connect);
+
+
 $promo_list = include_template('templates/blocks/promo-list.php', ['categories' => $categories]);
 $nav_list = include_template('templates/blocks/nav-list.php', ['categories' => $categories]);
 

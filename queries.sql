@@ -92,18 +92,18 @@ ORDER BY l.creation_date DESC LIMIT 3;
 
 -- Получить лот по его id.
 -- Показать также название категории, к которой принадлежит лот.
-SELECT l.name, c.name FROM lots l
-JOIN categories c ON c.id = l.category_id
-WHERE l.id = 2
+-- SELECT l.name, c.name FROM lots l
+-- JOIN categories c ON c.id = l.category_id
+-- WHERE l.id = 2
 
 
 -- Обновить название лота по его id.
-UPDATE lots
-SET name = 'update name'
-WHERE id = 2
+-- UPDATE lots
+-- SET name = 'update name'
+-- WHERE id = 2
 
 
 -- Получить список самых свежих ставок для лота по его id.
-SELECT * FROM bids 
-WHERE lot_id = 2
-ORDER BY creation_date DESC
+-- SELECT * FROM bids 
+-- WHERE lot_id = 2
+-- ORDER BY creation_date DESC
